@@ -1,0 +1,17 @@
+services:
+  workbench:
+    build: .
+    image: connectome-workbench:latest
+    container_name: connectome-workbench
+    ports:
+      - "${HTTP_PORT:-3000}:3000"
+      - "${HTTPS_PORT:-3001}:3001"
+    volumes:
+      - /dev/shm:/dev/shm
+      - ${DATA_DIR:-./data}:/data
+    environment:
+      - PUID=${PUID:-1000}
+      - PGID=${PGID:-1000}
+      - TZ=${TZ:-America/New_York}
+    restart: unless-stopped
+    shm_size: "2gb"
